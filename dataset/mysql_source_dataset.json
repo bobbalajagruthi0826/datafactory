@@ -1,0 +1,24 @@
+{
+	"name": "mysql_source_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MySql1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_value": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().p_value",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

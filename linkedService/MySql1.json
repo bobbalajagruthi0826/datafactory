@@ -1,0 +1,16 @@
+{
+	"name": "MySql1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "MySql",
+		"typeProperties": {
+			"connectionString": "server=127.0.0.1;port=3306;database=adf_project;user=root;password=Jaggu6;AllowPublicKeyRetrieval=True;sslMode=None;",
+			"driverVersion": "v2"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

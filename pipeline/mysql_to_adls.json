@@ -1,0 +1,199 @@
+{
+	"name": "mysql_to_adls",
+	"properties": {
+		"activities": [
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@json('[\n  { \"name\": \"dim_flight\" },\n  { \"name\": \"dim_airline\" },\n  { \"name\": \"dim_passenger\" }\n]')\n",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "copy mysqlfiles",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "MySqlSource"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"value": "@if(equals(item().name,'dim_flight'),pipeline().parameters.p_flight_mapping,if(equals(item().name,'dim_airline'),pipeline().parameters.p_airline_mapping,pipeline().parameters.p_passenger_mapping))",
+									"type": "Expression"
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "mysql_source_dataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"p_value": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "mysql_sink_dataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"q_value": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"p_flight_mapping": {
+				"type": "object",
+				"defaultValue": {
+					"type": "TabularTranslator",
+					"mappings": [
+						{
+							"source": {
+								"name": "flight_id",
+								"type": "Int32",
+								"physicalType": "Int32"
+							},
+							"sink": {
+								"name": "flight_id",
+								"type": "String",
+								"physicalType": "String"
+							}
+						},
+						{
+							"source": {
+								"name": "flight_number",
+								"type": "String",
+								"physicalType": "VarChar"
+							},
+							"sink": {
+								"name": "flight_number",
+								"type": "String",
+								"physicalType": "String"
+							}
+						},
+						{
+							"source": {
+								"name": "departure_time",
+								"type": "TimeSpan",
+								"physicalType": "Time"
+							},
+							"sink": {
+								"name": "departure_time",
+								"type": "String",
+								"physicalType": "String"
+							}
+						},
+						{
+							"source": {
+								"name": "arrival_time",
+								"type": "TimeSpan",
+								"physicalType": "Time"
+							},
+							"sink": {
+								"name": "arrival_time",
+								"type": "String",
+								"physicalType": "String"
+							}
+						}
+					],
+					"typeConversion": true,
+					"typeConversionSettings": {
+						"allowDataTruncation": true,
+						"treatBooleanAsNumber": false
+					}
+				}
+			},
+			"p_passenger_mapping": {
+				"type": "object",
+				"defaultValue": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
+			},
+			"p_airline_mapping": {
+				"type": "object",
+				"defaultValue": {
+					"type": "TabularTranslator",
+					"mappings": [
+						{
+							"source": {
+								"name": "airline_id",
+								"type": "Int32",
+								"physicalType": "Int32"
+							},
+							"sink": {
+								"name": "airline_id",
+								"type": "String",
+								"physicalType": "String"
+							}
+						},
+						{
+							"source": {
+								"name": "airline_name",
+								"type": "String",
+								"physicalType": "VarChar"
+							},
+							"sink": {
+								"name": "airline_name",
+								"type": "String",
+								"physicalType": "String"
+							}
+						},
+						{
+							"source": {
+								"name": "country",
+								"type": "String",
+								"physicalType": "VarChar"
+							},
+							"sink": {
+								"name": "country",
+								"type": "String",
+								"physicalType": "String"
+							}
+						}
+					],
+					"typeConversion": true,
+					"typeConversionSettings": {
+						"allowDataTruncation": true,
+						"treatBooleanAsNumber": false
+					}
+				}
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-11-21T13:58:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

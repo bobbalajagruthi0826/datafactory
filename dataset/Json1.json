@@ -1,0 +1,58 @@
+{
+	"name": "Json1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "nested_json_3.json",
+				"fileSystem": "flatternexamples"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"company": {
+					"type": "string"
+				},
+				"departments": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"deptName": {
+								"type": "string"
+							},
+							"employees": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"empId": {
+											"type": "integer"
+										},
+										"name": {
+											"type": "string"
+										},
+										"skills": {
+											"type": "array",
+											"items": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

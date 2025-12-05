@@ -1,0 +1,23 @@
+{
+	"name": "latest_load_empty_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "LatestLoad",
+				"folderPath": "Monitor",
+				"fileSystem": "bronzee"
+			}
+		},
+		"schema": {
+			"type": "object"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

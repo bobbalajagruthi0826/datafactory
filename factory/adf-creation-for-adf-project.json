@@ -1,0 +1,9 @@
+{
+	"name": "adf-creation-for-adf-project",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2ebe8146-27b8-4a30-b026-95154466562d",
+		"tenantId": "6b2999cb-e3a3-49c5-8dd3-e4cbf226665a"
+	}
+}
