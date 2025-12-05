@@ -1,0 +1,144 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-creation-for-adf-project"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"MySql1_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://projectstoragejags.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "adf-project-sql-server.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "adf_project_db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "admin6"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+			"value": {
+				"type": "TabularTranslator",
+				"mappings": [
+					{
+						"source": {
+							"name": "flight_id",
+							"type": "Int32",
+							"physicalType": "Int32"
+						},
+						"sink": {
+							"name": "flight_id",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "flight_number",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "flight_number",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "departure_time",
+							"type": "TimeSpan",
+							"physicalType": "Time"
+						},
+						"sink": {
+							"name": "departure_time",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "arrival_time",
+							"type": "TimeSpan",
+							"physicalType": "Time"
+						},
+						"sink": {
+							"name": "arrival_time",
+							"type": "String",
+							"physicalType": "String"
+						}
+					}
+				],
+				"typeConversion": true,
+				"typeConversionSettings": {
+					"allowDataTruncation": true,
+					"treatBooleanAsNumber": false
+				}
+			}
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+			"value": {
+				"type": "TabularTranslator",
+				"mappings": [
+					{
+						"source": {
+							"name": "airline_id",
+							"type": "Int32",
+							"physicalType": "Int32"
+						},
+						"sink": {
+							"name": "airline_id",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "airline_name",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "airline_name",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "country",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "country",
+							"type": "String",
+							"physicalType": "String"
+						}
+					}
+				],
+				"typeConversion": true,
+				"typeConversionSettings": {
+					"allowDataTruncation": true,
+					"treatBooleanAsNumber": false
+				}
+			}
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+			"value": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
+		}
+	}
+}

@@ -1,0 +1,241 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-creation-for-adf-project"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"MySql1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySql1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://projectstoragejags.dfs.core.windows.net/"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "adf-project-sql-server.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "adf_project_db"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin6"
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+			"type": "object",
+			"defaultValue": {
+				"type": "TabularTranslator",
+				"mappings": [
+					{
+						"source": {
+							"name": "flight_id",
+							"type": "Int32",
+							"physicalType": "Int32"
+						},
+						"sink": {
+							"name": "flight_id",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "flight_number",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "flight_number",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "departure_time",
+							"type": "TimeSpan",
+							"physicalType": "Time"
+						},
+						"sink": {
+							"name": "departure_time",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "arrival_time",
+							"type": "TimeSpan",
+							"physicalType": "Time"
+						},
+						"sink": {
+							"name": "arrival_time",
+							"type": "String",
+							"physicalType": "String"
+						}
+					}
+				],
+				"typeConversion": true,
+				"typeConversionSettings": {
+					"allowDataTruncation": true,
+					"treatBooleanAsNumber": false
+				}
+			}
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+			"type": "object",
+			"defaultValue": {
+				"type": "TabularTranslator",
+				"mappings": [
+					{
+						"source": {
+							"name": "airline_id",
+							"type": "Int32",
+							"physicalType": "Int32"
+						},
+						"sink": {
+							"name": "airline_id",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "airline_name",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "airline_name",
+							"type": "String",
+							"physicalType": "String"
+						}
+					},
+					{
+						"source": {
+							"name": "country",
+							"type": "String",
+							"physicalType": "VarChar"
+						},
+						"sink": {
+							"name": "country",
+							"type": "String",
+							"physicalType": "String"
+						}
+					}
+				],
+				"typeConversion": true,
+				"typeConversionSettings": {
+					"allowDataTruncation": true,
+					"treatBooleanAsNumber": false
+				}
+			}
+		},
+		"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+			"type": "string",
+			"defaultValue": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adf-creation-for-adf-project_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureSqlDatabase1_password": {
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"MySql1_password": {
+						"value": "[parameters('MySql1_password')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_server": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_database": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]"
+					},
+					"AzureSqlDatabase1_properties_typeProperties_userName": {
+						"value": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "adf-creation-for-adf-project_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_flight_mapping')]"
+					},
+					"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_airline_mapping')]"
+					},
+					"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adf-creation-for-adf-project_ArmTemplate_0')]"
+			]
+		}
+	]
+}
