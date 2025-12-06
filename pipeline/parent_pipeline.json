@@ -5,6 +5,8 @@
 			{
 				"name": "onprem",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"secureInput": false
@@ -35,6 +37,8 @@
 			{
 				"name": "github",
 				"type": "ExecutePipeline",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "onprem",
