@@ -39,7 +39,7 @@
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com/"
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_flight_mapping": {
 			"type": "object",
 			"defaultValue": {
 				"type": "TabularTranslator",
@@ -100,7 +100,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_airline_mapping": {
 			"type": "object",
 			"defaultValue": {
 				"type": "TabularTranslator",
@@ -149,7 +149,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping": {
 			"type": "string",
 			"defaultValue": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
 		},
@@ -186,9 +186,6 @@
 					"AzureSqlDatabase1_password": {
 						"value": "[parameters('AzureSqlDatabase1_password')]"
 					},
-					"MySql1_password": {
-						"value": "[parameters('MySql1_password')]"
-					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -222,14 +219,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
-						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_flight_mapping')]"
+					"MySql1_password": {
+						"value": "[parameters('MySql1_password')]"
 					},
-					"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
-						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_airline_mapping')]"
+					"trigger2_properties_parent_pipeline_parameters_parent_flight_mapping": {
+						"value": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_flight_mapping')]"
 					},
-					"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
-						"value": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping')]"
+					"trigger2_properties_parent_pipeline_parameters_parent_airline_mapping": {
+						"value": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_airline_mapping')]"
+					},
+					"trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+						"value": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping')]"
 					}
 				}
 			},

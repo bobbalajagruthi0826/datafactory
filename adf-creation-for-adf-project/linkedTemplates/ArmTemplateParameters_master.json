@@ -29,7 +29,7 @@
 		"HttpServer1_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/"
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_flight_mapping": {
 			"value": {
 				"type": "TabularTranslator",
 				"mappings": [
@@ -89,7 +89,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_airline_mapping": {
 			"value": {
 				"type": "TabularTranslator",
 				"mappings": [
@@ -137,7 +137,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping": {
 			"value": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
 		},
 		"containerUri": {

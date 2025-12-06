@@ -7,7 +7,11 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-creation-for-adf-project"
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_flight_mapping": {
+		"MySql1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySql1'"
+		},
+		"trigger2_properties_parent_pipeline_parameters_parent_flight_mapping": {
 			"type": "object",
 			"defaultValue": {
 				"type": "TabularTranslator",
@@ -68,7 +72,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_airline_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_airline_mapping": {
 			"type": "object",
 			"defaultValue": {
 				"type": "TabularTranslator",
@@ -117,7 +121,7 @@
 				}
 			}
 		},
-		"trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping": {
+		"trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping": {
 			"type": "string",
 			"defaultValue": "{             \"type\": \"TabularTranslator\",             \"mappings\": [                 {                     \"source\": {                         \"name\": \"passenger_id\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"passenger_id\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"full_name\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     },                     \"sink\": {                         \"name\": \"gender\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"age\",                         \"type\": \"Int32\",                         \"physicalType\": \"Int32\"                     },                     \"sink\": {                         \"name\": \"age\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 },                 {                     \"source\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"VarChar\"                     },                     \"sink\": {                         \"name\": \"country\",                         \"type\": \"String\",                         \"physicalType\": \"String\"                     }                 }             ],             \"typeConversion\": true,             \"typeConversionSettings\": {                 \"allowDataTruncation\": true,                 \"treatBooleanAsNumber\": false             }"
 		}
@@ -126,6 +130,216 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "test"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/github_sink_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "github_files",
+						"fileSystem": "bronzee"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/github_source_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "anshlambagit/AnshLambaYoutube/refs/heads/main/ADF_Project/DimAirport.json"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/lastlookup_source_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "LastLoad",
+						"folderPath": "Monitor",
+						"fileSystem": "bronzee"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/latest_load_empty_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "LatestLoad",
+						"folderPath": "Monitor",
+						"fileSystem": "bronzee"
+					}
+				},
+				"schema": {
+					"type": "object"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/mysql_sink_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"q_value": {
+						"type": "String"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().q_value",
+							"type": "Expression"
+						},
+						"folderPath": "mysql_files",
+						"fileSystem": "bronzee"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_adls_copy_source_dataset')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/sql_adls_sink_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "sqlserver_files",
+						"fileSystem": "bronzee"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "MySql",
+				"typeProperties": {
+					"sslMode": 1,
+					"useSystemTrustStore": 0,
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('MySql1_password')]"
+					},
+					"driverVersion": "v2"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/goldLayer')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
@@ -456,7 +670,12 @@
 				"annotations": [],
 				"lastPublishTime": "2025-11-21T14:44:29Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/lastlookup_source_dataset')]",
+				"[concat(variables('factoryId'), '/datasets/sql_adls_copy_source_dataset')]",
+				"[concat(variables('factoryId'), '/datasets/sql_adls_sink_table')]",
+				"[concat(variables('factoryId'), '/datasets/latest_load_empty_dataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/github_to_adls')]",
@@ -520,7 +739,10 @@
 				"annotations": [],
 				"lastPublishTime": "2025-11-21T13:58:17Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/github_source_dataset')]",
+				"[concat(variables('factoryId'), '/datasets/github_sink_dataset')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/goldpipeline')]",
@@ -594,7 +816,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/MySql1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
@@ -1162,7 +1386,8 @@
 				"lastPublishTime": "2025-11-21T13:58:17Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/mysql_source_dataset')]"
+				"[concat(variables('factoryId'), '/datasets/mysql_source_dataset')]",
+				"[concat(variables('factoryId'), '/datasets/mysql_sink_dataset')]"
 			]
 		},
 		{
@@ -1466,7 +1691,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/trigger1')]",
+			"name": "[concat(parameters('factoryName'), '/trigger2')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1479,9 +1704,9 @@
 							"type": "PipelineReference"
 						},
 						"parameters": {
-							"parent_flight_mapping": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_flight_mapping')]",
-							"parent_airline_mapping": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_airline_mapping')]",
-							"parent_passenger_mapping": "[parameters('trigger1_properties_parent_pipeline_parameters_parent_passenger_mapping')]"
+							"parent_flight_mapping": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_flight_mapping')]",
+							"parent_airline_mapping": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_airline_mapping')]",
+							"parent_passenger_mapping": "[parameters('trigger2_properties_parent_pipeline_parameters_parent_passenger_mapping')]"
 						}
 					}
 				],
@@ -1490,9 +1715,8 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2025-12-05T12:22:00",
-						"timeZone": "Eastern Standard Time",
-						"schedule": {}
+						"startTime": "2025-12-06T10:05:00",
+						"timeZone": "Eastern Standard Time"
 					}
 				}
 			},
